@@ -29,7 +29,7 @@ class Settings(BaseSettings):
     MAX_TOP_K: int = 20
 
     # CORS
-    ALLOWED_ORIGINS: str = "http://localhost:3000,http://127.0.0.1:3000,https://ai-legal-lens-frontend.onrender.com"
+    ALLOWED_ORIGINS: str = "http://localhost:3000,http://127.0.0.1:3000,https://ai-legal-lens-1.onrender.com"
 
     @property
     def allowed_origins_list(self) -> List[str]:
