@@ -33,7 +33,19 @@ class Settings(BaseSettings):
 
     @property
     def allowed_origins_list(self) -> List[str]:
-        return [o.strip() for o in self.ALLOWED_ORIGINS.split(",") if o.strip()]
+        origins = [o.strip() for o in self.ALLOWED_ORIGINS.split(",") if o.strip()]
+        always_allowed = [
+            "https://ai-legal-lens-1.onrender.com",
+            "https://ai-legal-lens.onrender.com",
+            "http://localhost:3000",
+            "http://127.0.0.1:3000",
+            "http://localhost:3001",
+            "http://127.0.0.1:3001"
+        ]
+        for url in always_allowed:
+            if url not in origins:
+                origins.append(url)
+        return origins
 
     class Config:
         env_file = ".env"
