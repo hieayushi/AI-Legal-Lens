@@ -1,0 +1,5 @@
+{"question": "What are the grounds for granting bail?", "expected_pages": [1, 2], "document_id": null}
+{"question": "What is the main legal issue discussed?", "expected_pages": [1], "document_id": null}
+{"question": "Who are the parties involved in this case?", "expected_pages": [1], "document_id": null}
+{"question": "What was the final order or judgment?", "expected_pages": [3, 4, 5], "document_id": null}
+{"question": "What evidence was presented?", "expected_pages": [2, 3], "document_id": null}

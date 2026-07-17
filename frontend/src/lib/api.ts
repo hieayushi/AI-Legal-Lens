@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1";
+export const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1";
+console.debug("[API] BASE_URL", BASE_URL);
 
 export const api = axios.create({
   baseURL: BASE_URL,
@@ -10,6 +11,7 @@ export const api = axios.create({
 // Attach JWT token on every request
 api.interceptors.request.use((config) => {
   if (typeof window !== "undefined") {
+    console.debug("[API REQUEST]", config.method, config.baseURL, config.url, config.data);
     const token = localStorage.getItem("ll_token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -22,6 +24,9 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (res) => res,
   (error) => {
+    if (typeof window !== "undefined") {
+      console.error("[API ERROR]", error?.response?.status, error?.response?.data, error?.message);
+    }
     if (error.response?.status === 401 && typeof window !== "undefined") {
       localStorage.removeItem("ll_token");
       window.location.href = "/login";

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { authApi } from "@/lib/api";
+import { authApi, BASE_URL } from "@/lib/api";
 import { useAuthStore } from "@/lib/store";
 import { Scale, Loader2, Eye, EyeOff } from "lucide-react";
 import toast from "react-hot-toast";
@@ -18,6 +18,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
 
 const handleSubmit = async () => {
+  console.debug("[LOGIN PAGE] SUBMIT", { mode, email, fullName, BASE_URL });
   if (!email || !password) return;
   if (mode === "register" && !fullName) {
     toast.error("Full name is required");
@@ -30,16 +31,9 @@ const handleSubmit = async () => {
         ? await authApi.login(email, password)
         : await authApi.register(email, password, fullName);
 
-    const { access_token, user_id, role } = res.data;
+    const { access_token, user } = res.data;
 
-    // Build user object directly from auth response — no extra /me call needed
-    const user = {
-      id: user_id,
-      email: email,
-      full_name: fullName || email.split("@")[0],
-      role: role,
-    };
-
+    // Use the backend user object directly
     setAuth(user, access_token);
     toast.success(mode === "login" ? "Welcome back!" : "Account created!");
     router.push("/dashboard");
