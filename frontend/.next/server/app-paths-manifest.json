@@ -1,9 +1,0 @@
-{
-  "/dashboard/page": "app/dashboard/page.js",
-  "/login/page": "app/login/page.js",
-  "/query/page": "app/query/page.js",
-  "/upload/page": "app/upload/page.js",
-  "/analytics/page": "app/analytics/page.js",
-  "/governance/page": "app/governance/page.js",
-  "/search/page": "app/search/page.js"
-}
