@@ -29,31 +29,52 @@ def get_sync_db():
     return sync_db
 
 
+def _ensure_index(collection, keys, **kwargs):
+    """
+    Create an index only if one with the same key specification does not
+    already exist.  This avoids ``IndexKeySpecsConflict`` errors that occur
+    when ``create_index`` is called with options that differ from an
+    existing index on the same key pattern.
+    """
+    # Normalise *keys* to the list-of-tuples form used by index_information()
+    from pymongo import IndexModel
+    idx = IndexModel(keys, **kwargs)
+    desired_key = list(idx.document["key"].items())
+
+    existing = collection.index_information()
+    for info in existing.values():
+        if info.get("key") == desired_key:
+            return  # index already exists — nothing to do
+    collection.create_index(keys, **kwargs)
+
+
 def init_db():
     """
     Initialize indexes on MongoDB collections.
+    Checks for existing indexes before creating to avoid
+    IndexKeySpecsConflict on repeated startups.
     """
     try:
         # Users indexes
-        sync_db.users.create_index("email", unique=True)
+        _ensure_index(sync_db.users, "email", unique=True)
 
         # Documents indexes
-        sync_db.documents.create_index("doc_type")
-        sync_db.documents.create_index("processing_status")
+        _ensure_index(sync_db.documents, "doc_type")
+        _ensure_index(sync_db.documents, "processing_status")
 
         # Pages indexes
-        sync_db.pages.create_index([("document_id", 1), ("page_number", 1)], unique=True)
-        sync_db.pages.create_index("section_title")
+        _ensure_index(sync_db.pages, [("document_id", 1), ("page_number", 1)], unique=True)
+        _ensure_index(sync_db.pages, "section_title")
 
         # Sections indexes
-        sync_db.sections.create_index("document_id")
+        _ensure_index(sync_db.sections, "document_id")
 
         # Query logs indexes
-        sync_db.query_logs.create_index("user_id")
-        sync_db.query_logs.create_index("document_id")
+        _ensure_index(sync_db.query_logs, "user_id")
+        _ensure_index(sync_db.query_logs, "document_id")
 
         # Eval runs indexes
-        sync_db.eval_runs.create_index("retrieval_method")
+        _ensure_index(sync_db.eval_runs, "retrieval_method")
 
         logger.info("MongoDB Atlas indexes verified and created successfully.")
     except Exception as e:

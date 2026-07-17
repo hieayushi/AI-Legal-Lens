@@ -68,10 +68,12 @@ app.include_router(api_router)
 
 
 @app.get("/", include_in_schema=False)
+@app.head("/", include_in_schema=False)
 def root():
     return {"message": "LegalLens AI API", "version": "1.0.0", "docs": "/docs"}
 
 
 @app.get("/health", tags=["health"])
+@app.head("/health", tags=["health"])
 def health():
     return {"status": "ok"}
