@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1";
+export const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://ai-legal-lens.onrender.com/api/v1";
 console.debug("[API] BASE_URL", BASE_URL);
 
 export const api = axios.create({
