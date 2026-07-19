@@ -79,7 +79,7 @@ export default function QueryPage() {
   return (
     <div className="h-full flex flex-col">
       {/* Header */}
-      <div className="px-6 py-4 border-b border-parchment-border bg-white">
+      <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-parchment-border bg-white">
         <div className="flex items-center gap-2">
           <Scale className="w-5 h-5 text-brand" />
           <h1 className="font-display font-semibold text-ink">Ask LegalLens</h1>
@@ -89,7 +89,7 @@ export default function QueryPage() {
         </p>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-6 py-5 max-w-5xl mx-auto w-full">
+      <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 sm:py-5 max-w-5xl mx-auto w-full">
         {/* Query controls */}
         <div className="card mb-5">
           {/* Method selector */}
@@ -159,12 +159,12 @@ export default function QueryPage() {
               }}
               placeholder={`e.g. "Why was anticipatory bail denied?" or "What are the eligibility criteria?"`}
               rows={3}
-              className="input resize-none pr-28"
+              className="input resize-none sm:pr-28"
             />
             <button
               onClick={handleSubmit}
               disabled={loading || !query.trim()}
-              className="absolute right-3 bottom-3 btn-primary px-3 py-1.5 flex items-center gap-1.5"
+              className="sm:absolute sm:right-3 sm:bottom-3 btn-primary w-full sm:w-auto mt-2 sm:mt-0 px-3 py-1.5 flex items-center justify-center gap-1.5"
             >
               {loading ? (
                 <Loader2 className="w-3.5 h-3.5 animate-spin" />

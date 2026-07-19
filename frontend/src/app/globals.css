@@ -129,3 +129,29 @@
   animation: shimmer 1.5s infinite;
   border-radius: 6px;
 }
+
+/* ── Mobile-responsive utilities ─────── */
+
+/* Safe-area padding for notched phones (iPhone X+) */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Scrollable table wrapper for mobile */
+.table-scroll {
+  -webkit-overflow-scrolling: touch;
+  overflow-x: auto;
+}
+
+/* Ensure tap targets are at least 44px on touch */
+@media (pointer: coarse) {
+  button, a, select, input {
+    min-height: 44px;
+  }
+  /* Exclude tiny icon buttons from min-height */
+  button.icon-btn-sm {
+    min-height: auto;
+  }
+}

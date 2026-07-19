@@ -35,14 +35,14 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
+    <div className="p-4 sm:p-6 max-w-7xl mx-auto">
       <div className="mb-6">
-        <h1 className="text-2xl font-display font-semibold text-ink">Dashboard</h1>
-        <p className="text-sm text-ink-muted mt-0.5">Judicial intelligence at a glance</p>
+        <h1 className="text-xl sm:text-2xl font-display font-semibold text-ink">Dashboard</h1>
+        <p className="text-xs sm:text-sm text-ink-muted mt-0.5">Judicial intelligence at a glance</p>
       </div>
 
       {/* Stat cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <StatCard label="Documents Indexed" value={stats?.total_documents ?? 0}
           icon={<FileText className="w-5 h-5 text-brand" />} color="blue" />
         <StatCard label="Queries (30d)" value={stats?.total_queries ?? 0}
@@ -112,9 +112,9 @@ export default function DashboardPage() {
           {stats?.top_queried_documents?.length > 0 ? (
             <div className="space-y-2">
               {stats.top_queried_documents.map((d: any, i: number) => (
-                <div key={i} className="flex items-center justify-between py-1.5 border-b border-parchment-border last:border-0">
+                <div key={i} className="flex items-center justify-between py-1.5 border-b border-parchment-border last:border-0 gap-4">
                   <span className="text-sm text-ink truncate flex-1">{d.title}</span>
-                  <span className="text-xs text-ink-muted ml-2">{d.query_count} queries</span>
+                  <span className="text-xs text-ink-muted ml-2 flex-shrink-0">{d.query_count} queries</span>
                 </div>
               ))}
             </div>
@@ -138,7 +138,7 @@ export default function DashboardPage() {
               {history.map((q: any) => (
                 <div key={q.id} className="py-1.5 border-b border-parchment-border last:border-0">
                   <p className="text-sm text-ink truncate">{q.query_text}</p>
-                  <div className="flex items-center gap-3 mt-0.5">
+                  <div className="flex items-center gap-3 mt-0.5 flex-wrap">
                     <span className="text-[10px] text-ink-muted capitalize">{q.retrieval_method}</span>
                     <span className="text-[10px] text-ink-muted">{q.latency_ms}ms</span>
                     <span className="text-[10px] text-ink-muted">{q.citation_count} citations</span>
@@ -166,13 +166,13 @@ function StatCard({ label, value, icon, color }: any) {
     amber: "bg-amber-50", green: "bg-green-50",
   };
   return (
-    <div className="card">
-      <div className="flex items-start justify-between">
-        <div>
-          <p className="text-xs text-ink-muted mb-1">{label}</p>
-          <p className="text-2xl font-display font-semibold text-ink">{value}</p>
+    <div className="card p-4">
+      <div className="flex items-start justify-between gap-2">
+        <div className="min-w-0">
+          <p className="text-xs text-ink-muted mb-1 truncate">{label}</p>
+          <p className="text-xl sm:text-2xl font-display font-semibold text-ink truncate">{value}</p>
         </div>
-        <div className={`w-9 h-9 rounded-lg ${bg[color] || "bg-parchment-warm"} flex items-center justify-center flex-shrink-0`}>
+        <div className={`w-8 h-8 sm:w-9 sm:h-9 rounded-lg ${bg[color] || "bg-parchment-warm"} flex items-center justify-center flex-shrink-0`}>
           {icon}
         </div>
       </div>
@@ -182,9 +182,9 @@ function StatCard({ label, value, icon, color }: any) {
 
 function DashboardSkeleton() {
   return (
-    <div className="p-6 max-w-7xl mx-auto">
+    <div className="p-4 sm:p-6 max-w-7xl mx-auto">
       <div className="skeleton h-7 w-40 mb-6" />
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         {[...Array(4)].map((_, i) => (
           <div key={i} className="card"><div className="skeleton h-16 w-full" /></div>
         ))}

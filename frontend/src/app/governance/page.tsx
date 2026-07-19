@@ -41,12 +41,12 @@ export default function GovernancePage() {
   }, {} as Record<string, any[]>);
 
   return (
-    <div className="p-6 max-w-5xl mx-auto">
-      <div className="mb-6 flex items-center gap-2">
-        <Building2 className="w-6 h-6 text-brand" />
+    <div className="p-4 sm:p-6 max-w-5xl mx-auto">
+      <div className="mb-6 flex items-start sm:items-center gap-2">
+        <Building2 className="w-5 h-5 sm:w-6 sm:h-6 text-brand flex-shrink-0 mt-0.5 sm:mt-0" />
         <div>
-          <h1 className="text-2xl font-display font-semibold text-ink">Governance Intelligence</h1>
-          <p className="text-sm text-ink-muted">Policies, circulars, regulations, and government orders</p>
+          <h1 className="text-xl sm:text-2xl font-display font-semibold text-ink">Governance Intelligence</h1>
+          <p className="text-xs sm:text-sm text-ink-muted">Policies, circulars, regulations, and government orders</p>
         </div>
       </div>
 
@@ -80,7 +80,7 @@ export default function GovernancePage() {
               </h2>
               <div className="space-y-2">
                 {docs.map((doc) => (
-                  <div key={doc.id} className="card-hover flex items-center justify-between gap-4">
+                  <div key={doc.id} className="card-hover flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
                     <div className="flex items-center gap-3 flex-1 min-w-0">
                       <FileText className="w-4 h-4 text-brand flex-shrink-0" />
                       <div className="min-w-0">

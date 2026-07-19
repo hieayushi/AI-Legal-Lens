@@ -47,9 +47,9 @@ export default function SearchPage() {
   };
 
   return (
-    <div className="p-6 max-w-5xl mx-auto">
+    <div className="p-4 sm:p-6 max-w-5xl mx-auto">
       <div className="mb-6">
-        <h1 className="text-2xl font-display font-semibold text-ink">Case Search</h1>
+        <h1 className="text-xl sm:text-2xl font-display font-semibold text-ink">Case Search</h1>
         <p className="text-sm text-ink-muted mt-0.5">Browse and search all indexed legal documents</p>
       </div>
 
@@ -98,7 +98,7 @@ export default function SearchPage() {
         <div className="space-y-3">
           {filtered.map((doc) => (
             <div key={doc.id} className="card-hover">
-              <div className="flex items-start justify-between gap-4">
+              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
                     <h3 className="font-medium text-sm text-ink truncate">{doc.title}</h3>
@@ -106,7 +106,7 @@ export default function SearchPage() {
                       {doc.processing_status}
                     </span>
                   </div>
-                  <div className="flex items-center gap-4 text-xs text-ink-muted flex-wrap">
+                  <div className="flex items-center gap-3 sm:gap-4 text-xs text-ink-muted flex-wrap">
                     {doc.court_name && <span>{doc.court_name}</span>}
                     {doc.case_number && <span className="font-mono">{doc.case_number}</span>}
                     {doc.judgment_date && (
@@ -125,12 +125,12 @@ export default function SearchPage() {
                     </div>
                   )}
                 </div>
-                <div className="flex flex-col gap-2 flex-shrink-0">
+                <div className="flex flex-row sm:flex-col gap-2 flex-shrink-0">
                   <span className="badge badge-blue capitalize">{doc.doc_type}</span>
                   {doc.processing_status === "indexed" && (
                     <Link
                       href={`/query?doc=${doc.id}`}
-                      className="text-xs text-brand hover:underline text-right"
+                      className="text-xs text-brand hover:underline sm:text-right"
                     >
                       Query →
                     </Link>

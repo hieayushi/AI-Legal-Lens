@@ -80,9 +80,9 @@ export default function UploadPage() {
   if (!ready) return null;
 
   return (
-    <div className="p-6 max-w-2xl mx-auto">
+    <div className="p-4 sm:p-6 max-w-2xl mx-auto">
       <div className="mb-6">
-        <h1 className="text-2xl font-display font-semibold text-ink">Upload Document</h1>
+        <h1 className="text-xl sm:text-2xl font-display font-semibold text-ink">Upload Document</h1>
         <p className="text-sm text-ink-muted mt-0.5">
           PDFs are processed, TOC extracted, and pages indexed hierarchically
         </p>
@@ -116,7 +116,7 @@ export default function UploadPage() {
             }}
             onDragLeave={() => setDragOver(false)}
             className={clsx(
-              "border-2 border-dashed rounded-xl p-10 text-center transition-colors cursor-pointer",
+              "border-2 border-dashed rounded-xl p-6 sm:p-10 text-center transition-colors cursor-pointer",
               dragOver
                 ? "border-brand bg-brand-light"
                 : file

@@ -43,13 +43,13 @@ export default function AdminPage() {
   };
 
   return (
-    <div className="p-6 max-w-5xl mx-auto">
-      <div className="mb-6 flex items-center justify-between">
+    <div className="p-4 sm:p-6 max-w-5xl mx-auto">
+      <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="flex items-center gap-2">
           <Shield className="w-5 h-5 text-brand" />
-          <h1 className="text-2xl font-display font-semibold text-ink">Admin Panel</h1>
+          <h1 className="text-xl sm:text-2xl font-display font-semibold text-ink">Admin Panel</h1>
         </div>
-        <button onClick={fetchDocs} className="btn-secondary flex items-center gap-2 text-sm">
+        <button onClick={fetchDocs} className="btn-secondary flex items-center justify-center gap-2 text-sm w-full sm:w-auto">
           <RefreshCw className="w-4 h-4" /> Refresh
         </button>
       </div>
@@ -72,52 +72,91 @@ export default function AdminPage() {
         </div>
       ) : (
         <div className="card overflow-hidden p-0">
-          <table className="w-full text-sm">
-            <thead className="bg-parchment-warm">
-              <tr className="text-left text-xs text-ink-muted">
-                <th className="px-4 py-3 font-medium">Document</th>
-                <th className="px-4 py-3 font-medium">Type</th>
-                <th className="px-4 py-3 font-medium">Pages</th>
-                <th className="px-4 py-3 font-medium">Status</th>
-                <th className="px-4 py-3 font-medium">Uploaded</th>
-                <th className="px-4 py-3 font-medium"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {documents.map((doc) => (
-                <tr key={doc.id} className="border-t border-parchment-border hover:bg-parchment/50">
-                  <td className="px-4 py-3">
-                    <div className="font-medium text-ink truncate max-w-[240px]">{doc.title}</div>
+          {/* Mobile card layout */}
+          <div className="sm:hidden divide-y divide-parchment-border">
+            {documents.map((doc) => (
+              <div key={doc.id} className="p-4">
+                <div className="flex items-start justify-between gap-2 mb-2">
+                  <div className="min-w-0 flex-1">
+                    <div className="font-medium text-sm text-ink truncate">{doc.title}</div>
                     {doc.case_number && (
-                      <div className="text-xs text-ink-muted font-mono">{doc.case_number}</div>
+                      <div className="text-xs text-ink-muted font-mono mt-0.5">{doc.case_number}</div>
                     )}
-                  </td>
-                  <td className="px-4 py-3 text-ink-soft capitalize">{doc.doc_type}</td>
-                  <td className="px-4 py-3 text-ink-soft">{doc.page_count}</td>
-                  <td className="px-4 py-3">
-                    <span className={`text-xs font-medium capitalize ${statusColor[doc.processing_status] || "text-ink-muted"}`}>
-                      {doc.processing_status}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-ink-muted text-xs">
+                  </div>
+                  <button
+                    onClick={() => handleDelete(doc.id, doc.title)}
+                    disabled={deleting === doc.id}
+                    className="icon-btn-sm text-ink-muted hover:text-verdict-red transition-colors disabled:opacity-40 p-1"
+                    title="Delete document"
+                  >
+                    {deleting === doc.id
+                      ? <RefreshCw className="w-4 h-4 animate-spin" />
+                      : <Trash2 className="w-4 h-4" />}
+                  </button>
+                </div>
+                <div className="flex items-center gap-3 flex-wrap text-xs">
+                  <span className="capitalize text-ink-soft">{doc.doc_type}</span>
+                  <span className="text-ink-soft">{doc.page_count} pages</span>
+                  <span className={`font-medium capitalize ${statusColor[doc.processing_status] || "text-ink-muted"}`}>
+                    {doc.processing_status}
+                  </span>
+                  <span className="text-ink-muted">
                     {doc.created_at ? new Date(doc.created_at).toLocaleDateString("en-IN") : "—"}
-                  </td>
-                  <td className="px-4 py-3">
-                    <button
-                      onClick={() => handleDelete(doc.id, doc.title)}
-                      disabled={deleting === doc.id}
-                      className="text-ink-muted hover:text-verdict-red transition-colors disabled:opacity-40"
-                      title="Delete document"
-                    >
-                      {deleting === doc.id
-                        ? <RefreshCw className="w-4 h-4 animate-spin" />
-                        : <Trash2 className="w-4 h-4" />}
-                    </button>
-                  </td>
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop table layout */}
+          <div className="hidden sm:block overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead className="bg-parchment-warm">
+                <tr className="text-left text-xs text-ink-muted">
+                  <th className="px-4 py-3 font-medium">Document</th>
+                  <th className="px-4 py-3 font-medium">Type</th>
+                  <th className="px-4 py-3 font-medium">Pages</th>
+                  <th className="px-4 py-3 font-medium">Status</th>
+                  <th className="px-4 py-3 font-medium">Uploaded</th>
+                  <th className="px-4 py-3 font-medium"></th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {documents.map((doc) => (
+                  <tr key={doc.id} className="border-t border-parchment-border hover:bg-parchment/50">
+                    <td className="px-4 py-3">
+                      <div className="font-medium text-ink truncate max-w-[240px]">{doc.title}</div>
+                      {doc.case_number && (
+                        <div className="text-xs text-ink-muted font-mono">{doc.case_number}</div>
+                      )}
+                    </td>
+                    <td className="px-4 py-3 text-ink-soft capitalize">{doc.doc_type}</td>
+                    <td className="px-4 py-3 text-ink-soft">{doc.page_count}</td>
+                    <td className="px-4 py-3">
+                      <span className={`text-xs font-medium capitalize ${statusColor[doc.processing_status] || "text-ink-muted"}`}>
+                        {doc.processing_status}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-ink-muted text-xs">
+                      {doc.created_at ? new Date(doc.created_at).toLocaleDateString("en-IN") : "—"}
+                    </td>
+                    <td className="px-4 py-3">
+                      <button
+                        onClick={() => handleDelete(doc.id, doc.title)}
+                        disabled={deleting === doc.id}
+                        className="icon-btn-sm text-ink-muted hover:text-verdict-red transition-colors disabled:opacity-40"
+                        title="Delete document"
+                      >
+                        {deleting === doc.id
+                          ? <RefreshCw className="w-4 h-4 animate-spin" />
+                          : <Trash2 className="w-4 h-4" />}
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>

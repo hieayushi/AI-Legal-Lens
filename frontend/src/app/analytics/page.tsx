@@ -30,16 +30,16 @@ export default function AnalyticsPage() {
   );
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
-      <div className="mb-6 flex items-center justify-between">
+    <div className="p-4 sm:p-6 max-w-6xl mx-auto">
+      <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="flex items-center gap-2">
           <BarChart2 className="w-5 h-5 text-brand" />
-          <h1 className="text-2xl font-display font-semibold text-ink">Analytics</h1>
+          <h1 className="text-xl sm:text-2xl font-display font-semibold text-ink">Analytics</h1>
         </div>
         <select
           value={days}
           onChange={(e) => setDays(Number(e.target.value))}
-          className="input w-36 text-sm"
+          className="input w-full sm:w-36 text-sm"
         >
           <option value={7}>Last 7 days</option>
           <option value={30}>Last 30 days</option>
@@ -48,7 +48,7 @@ export default function AnalyticsPage() {
       </div>
 
       {loading ? (
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {[...Array(4)].map((_, i) => <div key={i} className="card skeleton h-20" />)}
         </div>
       ) : (
@@ -105,7 +105,8 @@ export default function AnalyticsPage() {
           {stats?.top_queried_documents?.length > 0 && (
             <div className="card mt-4">
               <h2 className="font-medium text-sm text-ink mb-3">Top Queried Documents</h2>
-              <table className="w-full text-sm">
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-parchment-border text-left">
                     <th className="pb-2 text-xs text-ink-muted font-medium">Document</th>
@@ -120,7 +121,8 @@ export default function AnalyticsPage() {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+                </table>
+              </div>
             </div>
           )}
         </>

@@ -92,11 +92,11 @@ export default function EvaluationPage() {
   }));
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
+    <div className="p-4 sm:p-6 max-w-6xl mx-auto">
       <div className="mb-6">
         <div className="flex items-center gap-2 mb-1">
           <FlaskConical className="w-5 h-5 text-violet-600" />
-          <h1 className="text-2xl font-display font-semibold text-ink">
+          <h1 className="text-xl sm:text-2xl font-display font-semibold text-ink">
             Evaluation Dashboard
           </h1>
         </div>
@@ -107,7 +107,7 @@ export default function EvaluationPage() {
       </div>
 
       {loading && (
-        <div className="grid grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           {[...Array(3)].map((_, i) => (
             <div key={i} className="card skeleton h-40" />
           ))}
@@ -252,7 +252,7 @@ export default function EvaluationPage() {
       {!loading && runs.length > 0 && (
         <div className="card">
           <h2 className="font-medium text-sm text-ink mb-3">Evaluation Runs</h2>
-          <div className="overflow-x-auto">
+            <div className="overflow-x-auto">
             <table className="w-full text-xs">
               <thead>
                 <tr className="border-b border-parchment-border text-left text-ink-muted">
